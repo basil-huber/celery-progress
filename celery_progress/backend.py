@@ -45,11 +45,15 @@ class Progress(object):
 
     def get_info(self):
         if self.result.ready():
-            return {
+            info = {
                 'complete': True,
                 'success': self.result.successful(),
-                'progress': _get_completed_progress()
+                'progress': _get_completed_progress(),
+                'error': ''
             }
+            if not self.result.successful():
+                print(type(self.result.result))
+                info['error'] = self.result.result
         elif self.result.state == PROGRESS_STATE:
             return {
                 'complete': False,
